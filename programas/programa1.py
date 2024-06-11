@@ -5,25 +5,26 @@ import io
 import nltk
 import ssl
 
-#ssl._create_default_https_context = ssl._create_unverified_context
-#nltk.download('punkt')
+ssl._create_default_https_context = ssl._create_unverified_context
+nltk.download('punkt')
+
+# 0 0 1 1 2 2 2
 
 # grammar definition
 grammar ="""
-S -> AB | CD | '000' E '2'   
+S -> A B | C D | '0' '0' '0' E '2'   
 
-A-> '0' '1' | '0' A '1'
+A -> '0' A '1' | '0' '1'
 
-B-> '2' B | '2' 
+B -> '2' B | '2' 
 
-C-> '0' C | '0' 
+C -> '0' C | '0' 
 
 D -> '1' '1' D '2' | '1' '1' '2'
 
-E-> '0' '0' '0' E '2' | F
+E -> '0' '0' '0' E '2' | F
 
-F -> '1' F|'1'
-
+F -> '1' F | '1'
 """
 
 def parse(s, grammar):
