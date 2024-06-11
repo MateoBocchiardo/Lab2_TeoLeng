@@ -9,10 +9,22 @@ import ssl
 #nltk.download('punkt')
 
 # grammar definition
-grammar = """
-S -> '0' S '1' | '0' '1' 
-"""
+grammar ="""
+S -> AB | CD | '000' E '2'   
 
+A-> '0' '1' | '0' A '1'
+
+B-> '2' B | '2' 
+
+C-> '0' C | '0' 
+
+D -> '1' '1' D '2' | '1' '1' '2'
+
+E-> '0' '0' '0' E '2' | F
+
+F -> '1' F|'1'
+
+"""
 
 def parse(s, grammar):
         
