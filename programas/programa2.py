@@ -42,7 +42,7 @@ def format_tree(tree):
                     operador = children[1]
                     operando1 = children[0]
                     operando2 = children[2]
-                    return f"{operador}({operando1},{operando2})"
+                    return f"{operador}({operando1},{operando2})" #convierte 10 OP 2 en OP(10,2)
                 elif len(children) == 3 and children[0] == '(' and children[2] == ')':
                     # Caso de paréntesis
                     return f"{children[1]}"  # Devolver solo la expresión dentro de los paréntesis
@@ -55,11 +55,8 @@ def format_tree(tree):
 
 def printArbol(tree):
     if tree:
-        for t in tree:
-            formatted_tree = format_tree(t)
-            print(formatted_tree, end='')  # Evita el salto de línea adicional
-    else:
-        print("No se pudo generar el árbol de derivación.")
+        formatted_tree = format_tree(tree)
+        print(formatted_tree, end='')  # " end='' " Evita el salto de línea adicional
 
 if __name__ == '__main__':
     archivo_entrada = sys.argv[1]
@@ -70,16 +67,12 @@ if __name__ == '__main__':
     try:
       tree = parse(s, grammar)
       if tree:
-          #salida = "PERTENECE"
-          output = io.StringIO()
-          sys.stdout = output
           printArbol(tree)
-          sys.stdout = sys.__stdout__
-          salida = output.getvalue()
       else:
           salida = "NO PERTENECE"
     except ValueError:
       salida = "NO PERTENECE - FUERA DE ALFABETO"
-    f = io.open(archivo_salida, 'w', newline='\n', encoding='utf-8')
-    f.write(salida)
-    f.close()
+      f = io.open(archivo_salida, 'w', newline='\n', encoding='utf-8')
+      f.write(salida)
+      f.close()
+
