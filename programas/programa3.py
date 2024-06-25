@@ -21,9 +21,19 @@ Num -> "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "11" |
 BoolOp -> "<" | "<=" | ">" | ">=" | "==" | "!="
 AsigOperador -> "=" | "+=" | "-="
 """
+# S : Es asignación o estructura de control
+# Asignacion : Es asignacion de numero a variable o de variable a variable
+# EstructuraDeControl : Es if, elif, while o for
+# BoolExpr : Es una expresión booleana
+# Var : Es una variable
+# Num : Es un número
+# BoolOp : Es un operador booleano
+# AsigOperador : Es un operador de asignación
 
-def custom_tokenize(s):
-    # Combina operadores
+def nuevo_tokenize(s):
+    # Tokeniza el string s de tal manera que los operadores de asignación y booleanos queden juntos
+    # La tokenización default de nltk no agrupa los operadores de asignación y booleanos
+    # Ejemplo: "a+=1" -> ["a", "+=", "1"]
     s = re.sub(r'<=|>=|==|!=|\+=|-=|\*=', lambda m: f' {m.group()} ', s)
     s = re.sub(r'([()])', r' \1 ', s)  # Espacio en parentesis
     s = re.sub(r'(:)', r' \1 ', s)     # Espacio en dos puntos
@@ -37,7 +47,7 @@ def parse(s, grammar):
     parser = nltk.LeftCornerChartParser(grammar)
 
     # tokenize
-    s_tokenized = custom_tokenize(s)
+    s_tokenized = nuevo_tokenize(s)
     print(f"Tokenized input: {s_tokenized}")
 
     # parse
